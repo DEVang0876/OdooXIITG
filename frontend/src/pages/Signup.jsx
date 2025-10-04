@@ -2,10 +2,13 @@ import React, { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { Eye, EyeOff, Mail, Lock, User, Building, Users } from 'lucide-react'
 import Auth from '../services/auth'
+<<<<<<< HEAD
 import { Button } from '../components/ui/button'
 import { Input } from '../components/ui/input'
 import { Label } from '../components/ui/label'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '../components/ui/card'
+=======
+>>>>>>> 77a214f81d8be43ce25bdecd35c535722fed880b
 
 export default function Signup() {
   const [name, setName] = useState('')
@@ -44,6 +47,7 @@ export default function Signup() {
   }
 
   return (
+<<<<<<< HEAD
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
@@ -203,6 +207,99 @@ export default function Signup() {
           </p>
         </div>
       </div>
+=======
+    <div className="login-page">
+      <header className="login-header">
+        <h1>Expense Manager</h1>
+        <nav>
+          <Link to="/login" className="btn-secondary">Login</Link>
+          <Link to="/signup" className="btn-primary">Sign Up</Link>
+        </nav>
+      </header>
+
+      <main className="login-main">
+        <div className="login-container">
+          <form onSubmit={submit}>
+            <h2>Create account</h2>
+
+            {message && (
+              <div className={`message ${messageType}`}>
+                {message}
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="name">Full Name</label>
+              <input
+                id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                placeholder="Enter your full name"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="department">Department</label>
+              <input
+                id="department"
+                value={department}
+                onChange={(e) => setDepartment(e.target.value)}
+                placeholder="Enter your department"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="role">Role</label>
+              <select id="role" value={role} onChange={(e) => setRole(e.target.value)}>
+                <option value="employee">Employee</option>
+                <option value="manager">Manager</option>
+                <option value="admin">Admin</option>
+              </select>
+            </div>
+
+            <div className="actions">
+              <button type="submit" className="btn-primary" disabled={loading}>
+                {loading ? 'Creating account...' : 'Sign up'}
+              </button>
+            </div>
+
+            <p className="signup-link">
+              Already have an account? <Link to="/login">Sign in</Link>
+            </p>
+          </form>
+        </div>
+
+        <div className="right-panel">
+          {/* Right content area - intentionally empty for clean design */}
+        </div>
+      </main>
+>>>>>>> 77a214f81d8be43ce25bdecd35c535722fed880b
     </div>
   )
 }

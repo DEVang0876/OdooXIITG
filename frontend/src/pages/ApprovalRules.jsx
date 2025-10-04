@@ -13,9 +13,12 @@ export default function ApprovalRules() {
   const fetchCategories = async () => {
     try {
       const response = await API.get('/categories')
-      setCategories(response.data.data || response.data)
+      // Handle nested response structure
+      const data = response.data.data?.categories || response.data.data || response.data || []
+      setCategories(Array.isArray(data) ? data : [])
     } catch (error) {
       console.error('Fetch categories error:', error)
+      setCategories([]) // Ensure it's always an array
       toast.error('Failed to load categories')
     } finally {
       setLoading(false)
@@ -40,7 +43,7 @@ export default function ApprovalRules() {
         <h3>Available Categories</h3>
         <p>Expenses can be categorized into the following types:</p>
         <ul>
-          {categories.map(c => (
+          {(Array.isArray(categories) ? categories : []).map(c => (
             <li key={c._id}>
               <strong>{c.name}</strong>
               {c.description && <span> - {c.description}</span>}

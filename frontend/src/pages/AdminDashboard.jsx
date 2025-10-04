@@ -25,10 +25,12 @@ export default function AdminDashboard() {
         API.get('/users'),
         API.get('/analytics/dashboard')
       ])
-      setUsers(usersResponse.data.data || usersResponse.data)
+      const userData = usersResponse.data.data || usersResponse.data || []
+      setUsers(Array.isArray(userData) ? userData : [])
       setAnalytics(analyticsResponse.data.data)
     } catch (error) {
       console.error('Fetch data error:', error)
+      setUsers([]) // Ensure it's always an array
       toast.error('Failed to load dashboard data')
     } finally {
       setLoading(false)
@@ -46,7 +48,7 @@ export default function AdminDashboard() {
     }
   }
 
-  const filteredUsers = users.filter(u =>
+  const filteredUsers = (Array.isArray(users) ? users : []).filter(u =>
     !filter ||
     u.firstName?.toLowerCase().includes(filter.toLowerCase()) ||
     u.lastName?.toLowerCase().includes(filter.toLowerCase()) ||

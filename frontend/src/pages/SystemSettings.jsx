@@ -14,9 +14,12 @@ export default function SystemSettings() {
   const fetchCategories = async () => {
     try {
       const response = await API.get('/categories')
-      setCategories(response.data.data || response.data)
+      // Handle nested response structure
+      const data = response.data.data?.categories || response.data.data || response.data || []
+      setCategories(Array.isArray(data) ? data : [])
     } catch (error) {
       console.error('Fetch categories error:', error)
+      setCategories([]) // Ensure it's always an array
       toast.error('Failed to load categories')
     } finally {
       setLoading(false)
@@ -61,7 +64,7 @@ export default function SystemSettings() {
           <button className="btn-primary" onClick={add}>Add</button>
         </div>
         <ul>
-          {categories.map(c => (
+          {(Array.isArray(categories) ? categories : []).map(c => (
             <li key={c._id}>
               {c.name}
               <button className="btn-small btn-danger" onClick={() => del(c._id)}>Delete</button>

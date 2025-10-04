@@ -191,8 +191,14 @@ export const logout = async (req, res) => {
   try {
     const refreshToken = req.cookies?.refreshToken || req.body.refreshToken;
 
-    if (refreshToken) {
-      await req.user.removeRefreshToken(refreshToken);
+    // Only try to remove refresh token if user exists and refresh token is provided
+    if (refreshToken && req.user && typeof req.user.removeRefreshToken === 'function') {
+      try {
+        await req.user.removeRefreshToken(refreshToken);
+      } catch (error) {
+        console.log('Error removing refresh token:', error.message);
+        // Continue with logout even if refresh token removal fails
+      }
     }
 
     // Clear cookies
@@ -204,10 +210,14 @@ export const logout = async (req, res) => {
       message: 'Logged out successfully'
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Logout failed',
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+    console.error('Logout error:', error);
+    // Even if logout fails, clear cookies and return success
+    res.clearCookie('authToken');
+    res.clearCookie('refreshToken');
+
+    res.json({
+      success: true,
+      message: 'Logged out successfully'
     });
   }
 };

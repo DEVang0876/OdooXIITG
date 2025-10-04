@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import API from '../services/api';
 
 const ExpenseUploadForm = () => {
     const [selectedFile, setSelectedFile] = useState(null);
@@ -25,7 +25,7 @@ const ExpenseUploadForm = () => {
         formData.append('file', selectedFile);
 
         try {
-            const response = await axios.post('/api/expenses/upload', formData, {
+            const response = await API.post('/expenses/upload', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                 },

@@ -24,9 +24,24 @@ function AppContent() {
   const user = Auth.getUser()
   const isAuthPage = ['/login', '/signup', '/verify-email', '/forgot', '/reset'].includes(location.pathname)
 
+  // For auth pages, render them without the main app layout
+  if (isAuthPage) {
+    return (
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
+        <Route path="/forgot" element={<ForgotPassword />} />
+        <Route path="/reset" element={<ResetPassword />} />
+      </Routes>
+    )
+  }
+
+  // For regular pages, use the main app layout
   return (
     <div className="min-h-screen bg-background">
       <Header />
+<<<<<<< HEAD
       <div className="flex">
         {!isAuthPage && user && <Sidebar />}
         <main className={cn(
@@ -52,13 +67,34 @@ function AppContent() {
           </Routes>
         </main>
       </div>
+=======
+      {user && <Sidebar />}
+      <main className="app-main">
+        <Routes>
+          <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+          <Route path="/admin" element={<ProtectedRoute roles={["admin"]}><AdminDashboard /></ProtectedRoute>} />
+          <Route path="/admin/rules" element={<ProtectedRoute roles={["admin"]}><ApprovalRules /></ProtectedRoute>} />
+          <Route path="/admin/settings" element={<ProtectedRoute roles={["admin"]}><SystemSettings /></ProtectedRoute>} />
+          <Route path="/employee" element={<ProtectedRoute roles={["employee"]}><EmployeeDashboard /></ProtectedRoute>} />
+          <Route path="/employee/add" element={<ProtectedRoute roles={["employee"]}><AddExpense /></ProtectedRoute>} />
+          <Route path="/manager" element={<ProtectedRoute roles={["manager"]}><ManagerDashboard /></ProtectedRoute>} />
+          <Route path="/manager/approval/:id" element={<ProtectedRoute roles={["manager"]}><ApprovalDetails /></ProtectedRoute>} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </main>
+>>>>>>> 77a214f81d8be43ce25bdecd35c535722fed880b
     </div>
   )
 }
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter
+      future={{
+        v7_startTransition: true,
+        v7_relativeSplatPath: true
+      }}
+    >
       <AppContent />
     </BrowserRouter>
   )

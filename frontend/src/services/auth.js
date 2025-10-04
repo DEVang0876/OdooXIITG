@@ -19,7 +19,7 @@ const Auth = {
       lastName,
       email,
       password,
-      role: role || 'user',
+      role: role || 'employee',
       department
     })
     return response.data

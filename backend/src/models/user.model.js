@@ -248,8 +248,8 @@ userSchema.statics.findByCredentials = async function (email, password) {
 };
 
 // Index for better performance
-userSchema.index({ email: 1 });
-userSchema.index({ employeeId: 1 });
+// userSchema.index({ email: 1 }); // Removed - email has unique: true
+// userSchema.index({ employeeId: 1 }); // Removed - employeeId has unique: true
 userSchema.index({ manager: 1 });
 userSchema.index({ role: 1 });
 
