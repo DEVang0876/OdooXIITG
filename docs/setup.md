@@ -109,11 +109,21 @@ cd ocrapi
 python main.py
 ```
 
-### 5. Access the Application
+### 5. Seed Sample Data (Optional)
 
-- **Frontend**: http://localhost:5173
-- **Backend API**: http://localhost:3000
-- **OCR API**: http://localhost:4000
+For development and testing, you can populate the database with sample data:
+
+```bash
+cd backend
+npm run seed -- --confirm
+```
+
+**Warning**: This will clear all existing data. See `backend/scripts/README.md` for details.
+
+#### Sample Accounts Created:
+- **Admin**: admin@company.com / admin123
+- **Manager**: john.manager@company.com / manager123
+- **Employee**: mike.johnson@company.com / employee123
 
 ## Development Workflow
 

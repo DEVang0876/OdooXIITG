@@ -5,27 +5,27 @@
 - OM CHOKSI
 - DEVANG DHANDHUKIYA
 
-## 🚀 Project Overview
+## Project Overview
 
 A comprehensive expense management system with OCR capabilities for automatic receipt processing. The system allows employees to upload receipts, extract text using OCR, and manage expense approvals through a role-based workflow.
 
-## 🏗️ Architecture
+## Architecture
 
 - **Frontend**: React 19 with Vite, modern UI with routing
 - **Backend**: Node.js/Express with JWT authentication and MongoDB
 - **OCR Service**: FastAPI with Tesseract OCR for text extraction
 - **Database**: MongoDB with Mongoose ODM
 
-## 📋 Features
+## Features
 
-- ✅ User registration and email verification
-- ✅ Role-based access control (Employee, Manager, Admin)
-- ✅ Receipt upload with OCR processing
-- ✅ Expense management and approval workflow
-- ✅ Responsive modern UI
-- ✅ RESTful API architecture
+- User registration and email verification
+- Role-based access control (Employee, Manager, Admin)
+- Receipt upload with OCR processing
+- Expense management and approval workflow
+- Responsive modern UI
+- RESTful API architecture
 
-## 🛠️ Quick Setup
+## Quick Setup
 
 ### Prerequisites
 - Node.js 18+
@@ -42,7 +42,7 @@ A comprehensive expense management system with OCR capabilities for automatic re
    ```
 
 2. **Follow the detailed setup guide:**
-   📖 **[Complete Setup Guide](docs/setup.md)**
+   **[Complete Setup Guide](docs/setup.md)**
 
 3. **Quick start:**
    ```bash
@@ -60,7 +60,7 @@ A comprehensive expense management system with OCR capabilities for automatic re
    - Backend API: http://localhost:3000
    - OCR API: http://localhost:4000
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 OdooXIIT/
@@ -90,7 +90,7 @@ OdooXIIT/
     └── postman_collection.json
 ```
 
-## 🔧 Development
+## Development
 
 ### Available Scripts
 
@@ -120,7 +120,7 @@ python main.py # Start FastAPI server
 
 Create `.env` files in each service directory. See `docs/setup.md` for details.
 
-## 🚀 Deployment
+## Deployment
 
 ### Frontend (Vercel/Netlify)
 ```bash
@@ -140,14 +140,14 @@ npm run build
 - Set build command: `pip install -r requirements.txt`
 - Set start command: `python main.py`
 
-## 📚 Documentation
+## Documentation
 
 - **[Setup Guide](docs/setup.md)** - Complete installation and run instructions
 - **[Backend API](docs/backend_api_guide.md)** - API endpoints documentation
 - **[OCR API](docs/ocrapi_run_guide.md)** - OCR service documentation
 - **[Postman Collection](docs/postman_collection.json)** - API testing collection
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch
@@ -155,11 +155,11 @@ npm run build
 4. Test thoroughly
 5. Submit a pull request
 
-## 📝 License
+## License
 
 This project is part of the Odoo X IIT Hackathon submission.
 
-## 🆘 Support
+## Support
 
 For issues or questions:
 1. Check the [Setup Guide](docs/setup.md)
