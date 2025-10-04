@@ -25,7 +25,7 @@ function AppContent() {
 
   return (
     <div className="app-root">
-      {!isAuthPage && user && <Header />}
+      <Header />
       {!isAuthPage && user && <Sidebar />}
       <main className={`app-main ${isAuthPage ? 'auth-main' : ''}`}>
         <Routes>
