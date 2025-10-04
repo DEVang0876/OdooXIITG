@@ -7,6 +7,13 @@ import rateLimit from 'express-rate-limit';
 import cookieParser from 'cookie-parser';
 import connectDB from './src/utils/database.js';
 
+// Import routes
+import authRoutes from './src/routes/auth.routes.js';
+import userRoutes from './src/routes/users.routes.js';
+import expenseRoutes from './src/routes/expenses.routes.js';
+import categoryRoutes from './src/routes/categories.routes.js';
+import analyticsRoutes from './src/routes/analytics.routes.js';
+
 // Load environment variables
 dotenv.config();
 
@@ -32,6 +39,21 @@ app.use(cookieParser());
 app.use(express.json({ limit: '10mb' })); 
 app.use(express.urlencoded({ extended: true }));
 
+// Routes
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/expenses', expenseRoutes);
+app.use('/categories', categoryRoutes);
+app.use('/analytics', analyticsRoutes);
+
+// Health check
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'OK',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
 
 app.get('/', (req, res) => {
   res.json({
@@ -42,7 +64,8 @@ app.get('/', (req, res) => {
       auth: '/auth',
       expenses: '/expenses',
       categories: '/categories',
-      users: '/users'
+      users: '/users',
+      analytics: '/analytics'
     }
   });
 });
