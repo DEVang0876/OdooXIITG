@@ -1,0 +1,8 @@
+Odoo X IIT Hackathon
+
+TEAM:
+
+    KAUSTAV DAS
+    OM CHOKSI
+
+    DEVANG DHANDHUKIYA
