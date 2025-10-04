@@ -39,8 +39,17 @@ function write(data) {
 }
 
 const Store = {
+  ensureDefaultData() {
+    const d = defaultData()
+    write(d)
+    return d
+  },
   getUsers() { return read().users },
-  getUserByEmail(email) { return read().users.find(u => u.email === email) },
+  getUserByEmail(email) { 
+    if (!email) return null
+    const needle = (''+email).trim().toLowerCase()
+    return read().users.find(u => (u.email||'').trim().toLowerCase() === needle)
+  },
   createUser({ name, email, password, role, manager }){
     const data = read()
     if (data.users.find(u=>u.email===email)) throw new Error('Email exists')
