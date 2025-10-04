@@ -11,21 +11,27 @@ class EmailService {
     if (process.env.EMAIL_SERVICE === 'gmail') {
       this.transporter = nodemailer.createTransport({
         service: 'gmail',
+        host: 'smtp.gmail.com',
+        port: 587,
+        secure: false,
         auth: {
           user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD // Use App Password for Gmail
+          pass: process.env.EMAIL_PASS // Fixed to match .env file
+        },
+        tls: {
+          rejectUnauthorized: false
         }
       });
-    } 
+    }
     // Generic SMTP configuration
     else {
       this.transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || 'smtp.gmail.com',
-        port: process.env.SMTP_PORT || 587,
-        secure: false, // true for 465, false for other ports
+        host: process.env.EMAIL_HOST || 'smtp.gmail.com',
+        port: process.env.EMAIL_PORT || 587,
+        secure: process.env.EMAIL_SECURE === 'true', // true for 465, false for other ports
         auth: {
           user: process.env.EMAIL_USER,
-          pass: process.env.EMAIL_PASSWORD
+          pass: process.env.EMAIL_PASS // Fixed to match .env file
         },
         tls: {
           rejectUnauthorized: false
@@ -55,7 +61,7 @@ class EmailService {
 
   async sendOTPEmail(to, otp, userName = '') {
     const subject = 'Email Verification - Your OTP Code';
-    
+
     const html = `
     <!DOCTYPE html>
     <html lang="en">
@@ -199,7 +205,7 @@ class EmailService {
 
   async sendWelcomeEmail(to, userName) {
     const subject = 'Welcome to Expense Management System!';
-    
+
     const html = `
     <!DOCTYPE html>
     <html lang="en">

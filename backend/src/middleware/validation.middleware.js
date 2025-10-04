@@ -252,6 +252,11 @@ export const resendOTPValidation = Joi.object({
 // Validation middleware
 export const validate = (schema) => {
   return (req, res, next) => {
+    // Convert string numbers to actual numbers for FormData
+    if (req.body.amount && typeof req.body.amount === 'string') {
+      req.body.amount = parseFloat(req.body.amount);
+    }
+
     const { error, value } = schema.validate(req.body, {
       abortEarly: false,
       stripUnknown: true

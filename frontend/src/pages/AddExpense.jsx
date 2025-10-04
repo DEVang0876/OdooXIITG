@@ -19,17 +19,58 @@ export default function AddExpense() {
 
   const fetchCategories = async () => {
     try {
+      console.log('Fetching categories...')
       const response = await API.get('/categories')
-      setCategories(response.data.data || response.data)
+      console.log('Categories response:', response.data)
+
+      // Handle nested response structure
+      const data = response.data.data?.categories || response.data.data || response.data || []
+      console.log('Processed categories data:', data)
+      setCategories(Array.isArray(data) ? data : [])
+
+      if (data.length === 0) {
+        console.warn('No categories found, using fallback')
+        // Set fallback categories if no categories found
+        const fallbackCategories = [
+          { _id: '68e0f13656b73e2763fbfacd', name: 'Office Supplies' },
+          { _id: '68e0f13656b73e2763fbface', name: 'Travel' },
+          { _id: '68e0f13656b73e2763fbfacf', name: 'Meals & Entertainment' },
+          { _id: '68e0f13656b73e2763fbfad0', name: 'Software & Tools' },
+          { _id: '68e0f13656b73e2763fbfad1', name: 'Training & Development' },
+          { _id: '68e0f13656b73e2763fbfad2', name: 'Marketing' },
+          { _id: '68e0f13656b73e2763fbfad3', name: 'Utilities' },
+          { _id: '68e0f13656b73e2763fbfad4', name: 'Medical' }
+        ]
+        setCategories(fallbackCategories)
+        setMessage('Using default categories.')
+        setMessageType('info')
+      }
     } catch (error) {
       console.error('Fetch categories error:', error)
-      // Fallback to hardcoded categories
-      setCategories([
-        { _id: 'travel', name: 'Travel' },
-        { _id: 'meals', name: 'Meals' },
-        { _id: 'office', name: 'Office' },
-        { _id: 'other', name: 'Other' }
-      ])
+      console.error('Error response:', error.response?.data)
+      console.error('Error status:', error.response?.status)
+
+      // Set fallback categories immediately
+      const fallbackCategories = [
+        { _id: '68e0f13656b73e2763fbfacd', name: 'Office Supplies' },
+        { _id: '68e0f13656b73e2763fbface', name: 'Travel' },
+        { _id: '68e0f13656b73e2763fbfacf', name: 'Meals & Entertainment' },
+        { _id: '68e0f13656b73e2763fbfad0', name: 'Software & Tools' },
+        { _id: '68e0f13656b73e2763fbfad1', name: 'Training & Development' },
+        { _id: '68e0f13656b73e2763fbfad2', name: 'Marketing' },
+        { _id: '68e0f13656b73e2763fbfad3', name: 'Utilities' },
+        { _id: '68e0f13656b73e2763fbfad4', name: 'Medical' }
+      ]
+      setCategories(fallbackCategories)
+
+      // Show error message based on the type of error
+      if (error.response?.status === 403) {
+        setMessage('Please verify your email to access categories. Using default categories.')
+        setMessageType('warning')
+      } else {
+        setMessage('Could not load categories from server. Using default categories.')
+        setMessageType('warning')
+      }
     }
   }
 
@@ -49,28 +90,66 @@ export default function AddExpense() {
     setLoading(true)
     setMessage('')
     try {
-      const formData = new FormData()
-      formData.append('title', form.title)
-      formData.append('amount', parseFloat(form.amount))
-      formData.append('category', form.category)
-      formData.append('description', form.description || '')
-      formData.append('date', form.date)
+      // If there's a file, use FormData, otherwise use JSON
       if (form.receipt) {
-        formData.append('receipts', form.receipt)
-      }
+        const formData = new FormData()
+        formData.append('title', form.title)
+        formData.append('amount', parseFloat(form.amount))
+        formData.append('category', form.category)
+        formData.append('description', form.description || '')
+        formData.append('date', form.date)
+        formData.append('currency', 'USD')
+        formData.append('paymentMethod', 'cash')
+        formData.append('receipts', form.receipt) // Note: 'receipts' not 'receipt'
 
-      await API.post('/expenses', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
+        console.log('Submitting expense with file (FormData)')
+
+        await API.post('/expenses', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        })
+      } else {
+        // Use JSON when no file
+        const data = {
+          title: form.title,
+          amount: parseFloat(form.amount),
+          category: form.category,
+          description: form.description || '',
+          date: form.date,
+          currency: 'USD',
+          paymentMethod: 'cash'
         }
-      })
+
+        console.log('Submitting expense without file (JSON):', data)
+
+        await API.post('/expenses', data, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      }
 
       setMessage('Expense submitted successfully')
       setMessageType('success')
       navigate('/employee')
     } catch (error) {
       console.error('Submit expense error:', error)
-      setMessage(error.response?.data?.message || 'Failed to submit expense')
+      console.error('Error response:', error.response?.data)
+      console.error('Error status:', error.response?.status)
+      console.error('Error details:', JSON.stringify(error.response?.data, null, 2))
+
+      // Show detailed error message
+      let errorMessage = 'Failed to submit expense'
+      if (error.response?.data?.message) {
+        errorMessage = error.response.data.message
+      } else if (error.response?.data?.error) {
+        errorMessage = error.response.data.error
+      } else if (error.response?.data?.details) {
+        errorMessage = `Validation error: ${JSON.stringify(error.response.data.details)}`
+      }
+
+      setMessage(errorMessage)
       setMessageType('error')
     } finally {
       setLoading(false)
@@ -95,7 +174,7 @@ export default function AddExpense() {
         <label>Category *</label>
         <select value={form.category} onChange={(e) => onChange('category', e.target.value)} required>
           <option value="">Select</option>
-          {categories.map(cat => (
+          {(Array.isArray(categories) ? categories : []).map(cat => (
             <option key={cat._id} value={cat._id}>{cat.name}</option>
           ))}
         </select>

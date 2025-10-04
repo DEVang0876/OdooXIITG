@@ -39,36 +39,67 @@ export default function Login() {
   }
 
   return (
-    <div className="auth-page">
-      <form className="auth-card" onSubmit={submit}>
-        <h2>Sign in</h2>
-        {message && (
-          <div className={`message ${messageType}`}>
-            {message}
-          </div>
-        )}
-        <label>Email</label>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-        <label>Password</label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <div className="auth-actions">
-          <button className="btn-primary" type="submit" disabled={loading}>
-            {loading ? 'Signing in...' : 'Login'}
-          </button>
-          <Link to="/forgot">Forgot password?</Link>
+    <div className="login-page">
+      <header className="login-header">
+        <h1>Expense Manager</h1>
+        <nav>
+          <Link to="/login" className="btn-secondary">Login</Link>
+          <Link to="/signup" className="btn-primary">Sign Up</Link>
+        </nav>
+      </header>
+
+      <main className="login-main">
+        <div className="login-container">
+          <form onSubmit={submit}>
+            <h2>Sign in</h2>
+
+            {message && (
+              <div className={`message ${messageType}`}>
+                {message}
+              </div>
+            )}
+
+            <div>
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                required
+              />
+            </div>
+
+            <div>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Enter your password"
+                required
+              />
+            </div>
+
+            <div className="actions">
+              <button type="submit" className="btn-primary" disabled={loading}>
+                {loading ? 'Signing in...' : 'Login'}
+              </button>
+              <Link to="/forgot">Forgot password?</Link>
+            </div>
+
+            <p className="signup-link">
+              Don't have an account? <Link to="/signup">Sign up</Link>
+            </p>
+          </form>
         </div>
-        <div className="muted">Don't have an account? <Link to="/signup">Sign up</Link></div>
-      </form>
+
+        <div className="right-panel">
+          {/* Right content area - intentionally empty for clean design */}
+        </div>
+      </main>
     </div>
   )
 }

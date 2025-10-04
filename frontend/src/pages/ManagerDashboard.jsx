@@ -19,16 +19,18 @@ export default function ManagerDashboard() {
   const fetchPendingExpenses = async () => {
     try {
       const response = await API.get('/expenses?status=pending')
-      setPendings(response.data.data || response.data)
+      const data = response.data.data || response.data || []
+      setPendings(Array.isArray(data) ? data : [])
     } catch (error) {
       console.error('Fetch pending expenses error:', error)
+      setPendings([]) // Ensure it's always an array
       toast.error('Failed to load pending expenses')
     } finally {
       setLoading(false)
     }
   }
 
-  const filtered = pendings.filter(p =>
+  const filtered = (Array.isArray(pendings) ? pendings : []).filter(p =>
     !filter ||
     p._id?.includes(filter) ||
     p.user?.email?.toLowerCase().includes(filter.toLowerCase()) ||

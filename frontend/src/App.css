@@ -39,11 +39,17 @@ html,
 }
 
 /* Login Page Specific Styles */
-body.login-page {
+.login-page {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  height: 100vh;
+  width: 100vw;
   background-color: var(--background-color);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
 }
 
 label {
@@ -81,9 +87,13 @@ label {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5rem 3rem;
+  padding: 1rem 2rem;
   background-color: var(--dark-primary);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 10;
+  min-height: 70px;
 }
 
 .login-header h1 {
@@ -334,34 +344,47 @@ label {
 
 /* Professional Login Page Main Content */
 .login-main {
-  flex-grow: 1;
+  flex: 1;
   display: flex;
-  padding: 3rem;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
   gap: 0;
+  min-height: calc(100vh - 70px);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .login-container {
   width: 400px;
+  min-width: 320px;
+  max-width: 500px;
+  max-height: calc(100vh - 140px);
   background: var(--dark-primary);
-  padding: 3rem 2.5rem;
+  padding: 2.5rem 2rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   border-radius: 12px 0 0 12px;
   box-shadow: -2px 0 12px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
 }
 
 .login-container form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
+  width: 100%;
+  max-width: 100%;
 }
 
 .login-container h2 {
-  margin: 0 0 2rem 0;
-  font-size: 2rem;
+  margin: 0 0 1.5rem 0;
+  font-size: 1.875rem;
   font-weight: 700;
   color: var(--text-primary-white);
   letter-spacing: -0.5px;
+  text-align: center;
 }
 
 .login-container label {
@@ -375,7 +398,8 @@ label {
 
 .login-container input[type="email"],
 .login-container input[type="password"],
-.login-container input[type="text"] {
+.login-container input[type="text"],
+.login-container select {
   width: 100%;
   padding: 0.875rem 1rem;
   border: 2px solid var(--border-color);
@@ -389,7 +413,8 @@ label {
 
 .login-container input[type="email"]:focus,
 .login-container input[type="password"]:focus,
-.login-container input[type="text"]:focus {
+.login-container input[type="text"]:focus,
+.login-container select:focus {
   outline: none;
   border-color: var(--login-primary-blue);
   box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
@@ -457,45 +482,175 @@ label {
 
 .right-panel {
   flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 200px;
+  max-width: 600px;
   background: var(--white);
   border-radius: 0 12px 12px 0;
   box-shadow: 2px 0 12px rgba(0, 0, 0, 0.1);
-  min-height: 500px;
+  min-height: 400px;
+  max-height: calc(100vh - 140px);
+  overflow: hidden;
 }
 
 /* Responsive Design */
-@media (max-width: 1024px) {
+@media (max-width: 1200px) {
   .login-main {
-    padding: 2rem;
+    padding: 1.5rem;
+  }
+
+  .login-container {
+    width: 380px;
+    padding: 2rem 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .login-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .login-main {
+    padding: 1rem;
+    gap: 0;
   }
 
   .login-container {
     width: 350px;
+    padding: 1.5rem;
+  }
+
+  .login-container h2 {
+    font-size: 1.75rem;
   }
 }
 
 @media (max-width: 768px) {
   .login-header {
-    padding: 1rem 1.5rem;
+    padding: 1rem;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1rem;
+    min-height: auto;
   }
 
   .login-header h1 {
     font-size: 1.25rem;
+    flex: 1;
+  }
+
+  .login-header nav {
+    justify-content: flex-end;
   }
 
   .login-main {
     flex-direction: column;
-    padding: 1.5rem;
+    padding: 1rem;
+    gap: 0;
+    min-height: calc(100vh - 90px);
+    justify-content: center;
+    align-items: center;
   }
 
   .login-container {
     width: 100%;
-    border-radius: 12px 12px 0 0;
+    max-width: 450px;
+    margin: 0 auto;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    min-height: auto;
+    max-height: calc(100vh - 120px);
+    justify-content: center;
+  }
+
+  .login-container h2 {
+    font-size: 1.5rem;
   }
 
   .right-panel {
-    min-height: 200px;
-    border-radius: 0 0 12px 12px;
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-page {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .login-header {
+    padding: 0.75rem;
+    flex-direction: column;
+    text-align: center;
+    gap: 0.75rem;
+  }
+
+  .login-header h1 {
+    font-size: 1.125rem;
+  }
+
+  .login-header .btn-secondary,
+  .login-header .btn-primary {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+  }
+
+  .login-main {
+    padding: 1rem 0.75rem;
+    min-height: calc(100vh - 110px);
+    justify-content: center;
+    align-items: center;
+  }
+
+  .login-container {
+    padding: 1.5rem 1.25rem;
+    border-radius: 12px;
+    max-width: 100%;
+    width: 100%;
+    max-height: calc(100vh - 140px);
+    justify-content: center;
+  }
+
+  .login-container h2 {
+    font-size: 1.375rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .login-container form {
+    gap: 1rem;
+  }
+
+  .login-container input[type="email"],
+  .login-container input[type="password"],
+  .login-container input[type="text"],
+  .login-container select {
+    padding: 0.75rem;
+    font-size: 0.9375rem;
+  }
+
+  .login-container .actions button[type="submit"] {
+    padding: 0.75rem 1.25rem;
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .login-header {
+    padding: 0.5rem;
+  }
+
+  .login-header nav {
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .login-main {
+    padding: 0.5rem;
+  }
+
+  .login-container {
+    padding: 1rem 0.75rem;
   }
 }
 

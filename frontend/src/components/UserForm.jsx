@@ -19,9 +19,11 @@ export default function UserForm({ user: initial, onDone }) {
   const fetchManagers = async () => {
     try {
       const response = await API.get('/users?role=manager')
-      setManagers(response.data.data || response.data)
+      const data = response.data.data || response.data || []
+      setManagers(Array.isArray(data) ? data : [])
     } catch (error) {
       console.error('Fetch managers error:', error)
+      setManagers([]) // Ensure it's always an array
     }
   }
 
@@ -97,7 +99,7 @@ export default function UserForm({ user: initial, onDone }) {
         <label>Manager</label>
         <select value={user.manager || ''} onChange={(e) => setUser({ ...user, manager: e.target.value })}>
           <option value="">No Manager</option>
-          {managers.map(m => (
+          {(Array.isArray(managers) ? managers : []).map(m => (
             <option key={m._id} value={m._id}>{m.firstName} {m.lastName}</option>
           ))}
         </select>

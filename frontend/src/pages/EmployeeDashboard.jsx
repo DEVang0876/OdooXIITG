@@ -21,16 +21,18 @@ export default function EmployeeDashboard() {
   const fetchExpenses = async () => {
     try {
       const response = await API.get('/expenses')
-      setExpenses(response.data.data || response.data)
+      const data = response.data.data || response.data || []
+      setExpenses(Array.isArray(data) ? data : [])
     } catch (error) {
       console.error('Fetch expenses error:', error)
+      setExpenses([]) // Ensure it's always an array
       toast.error('Failed to load expenses')
     } finally {
       setLoading(false)
     }
   }
 
-  const filtered = expenses.filter(e =>
+  const filtered = (Array.isArray(expenses) ? expenses : []).filter(e =>
     !filter ||
     e._id?.includes(filter) ||
     e.title?.toLowerCase().includes(filter.toLowerCase()) ||

@@ -66,7 +66,7 @@ categorySchema.virtual('totalAmount', {
 });
 
 // Index for better performance
-categorySchema.index({ name: 1 });
+// categorySchema.index({ name: 1 }); // Removed - name has unique: true
 categorySchema.index({ createdBy: 1 });
 categorySchema.index({ isActive: 1 });
 

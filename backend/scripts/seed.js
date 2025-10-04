@@ -8,9 +8,9 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import bcrypt from 'bcryptjs';
-import { User } from './src/models/user.model.js';
-import { Category } from './src/models/category.model.js';
-import { Expense } from './src/models/expense.model.js';
+import User from '../src/models/user.model.js';
+import Category from '../src/models/category.model.js';
+import Expense from '../src/models/expense.model.js';
 
 // Load environment variables
 dotenv.config();
