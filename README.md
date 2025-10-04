@@ -1,0 +1,7 @@
+Odoo X IIT Hackathon 
+
+TEAM:
+
+    DEVANG DHANDHUKIYA = LEADER
+    KAUSTAV DAS        
+    OM CHOKSI 
