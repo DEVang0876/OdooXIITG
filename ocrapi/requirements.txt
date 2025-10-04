@@ -1,0 +1,12 @@
+# requirements.txt
+fastapi
+uvicorn[standard]
+python-multipart
+Pillow
+pytesseract
+pydantic-settings
+opencv-python-headless
+numpy
+scipy
+scikit-image
+pandas

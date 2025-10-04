@@ -1,0 +1,314 @@
+# OCR API Project Documentation
+
+## 📋 Project Overview
+
+**Project Name**: FastAPI OCR API  
+**Purpose**: Advanced Optical Character Recognition (OCR) service for extracting text from images, with specialized optimization for receipts and invoices  
+**Technology Stack**: FastAPI, Python, Docker, Tesseract OCR, OpenCV  
+**Current Version**: Enhanced Multi-Strategy OCR System  
+
+---
+
+## 🏗️ Project Architecture
+
+### Directory Structure
+```
+ocrapi/
+├── app/
+│   ├── api/
+│   │   ├── endpoints/
+│   │   │   ├── __init__.py
+│   │   │   └── ocr.py              # API endpoint definitions
+│   │   └── __init__.py
+│   ├── core/
+│   │   ├── __init__.py
+│   │   └── config.py               # Configuration management
+│   ├── schemas/
+│   │   ├── __init__.py
+│   │   └── ocr.py                  # Pydantic models for API responses
+│   ├── services/
+│   │   ├── __init__.py
+│   │   ├── ocr_service.py          # Core OCR business logic
+│   │   └── image_preprocessor.py   # Advanced image preprocessing
+│   └── __init__.py
+├── docs/
+│   └── project.txt                 # This documentation file
+├── test/                           # Test images directory
+├── .env                           # Environment variables
+├── .gitignore                     # Git ignore rules
+├── Dockerfile                     # Docker container configuration
+├── main.py                        # FastAPI application entry point
+├── requirements.txt               # Python dependencies
+└── README.md                      # Project readme
+```
+
+---
+
+## 🚀 Core Components
+
+### 1. FastAPI Application (main.py)
+- **Entry Point**: Initializes the FastAPI application
+- **CORS Middleware**: Enables cross-origin requests from any frontend
+- **Router Integration**: Includes OCR endpoints with `/api/v1/ocr` prefix
+- **Configuration**: Uses pydantic-settings for environment management
+
+### 2. Configuration Management (app/core/config.py)
+- **Environment Loading**: Automatically reads from .env file
+- **Settings Class**: Centralized configuration using Pydantic BaseSettings
+- **Default Values**: APP_NAME = "FastAPI OCR API"
+
+### 3. API Endpoints (app/api/endpoints/ocr.py)
+#### Available Endpoints:
+- **POST /api/v1/ocr/extract-text/**: General purpose OCR
+- **POST /api/v1/ocr/extract-receipt/**: Receipt-optimized OCR (enhanced accuracy)
+
+#### Features:
+- File type validation (images only)
+- Comprehensive error handling
+- Structured JSON responses
+- OpenAPI documentation integration
+
+### 4. Data Models (app/schemas/ocr.py)
+```python
+class OCRResponse(BaseModel):
+    filename: str    # Original filename
+    text: str       # Extracted text
+
+class OCRErrorResponse(BaseModel):
+    filename: str   # Original filename
+    error: str      # Error description
+```
+
+### 5. OCR Service (app/services/ocr_service.py)
+#### Advanced Multi-Strategy OCR System:
+- **Multiple OCR Configurations**: 7 different Tesseract configurations
+- **Ensemble Processing**: Combines results from multiple methods
+- **Confidence Scoring**: Selects best result based on confidence metrics
+- **Post-Processing**: Automatic text correction and formatting
+
+#### OCR Strategies:
+1. **Default OCR**: Standard text extraction
+2. **Receipt OCR**: Optimized for receipts/invoices
+3. **Single Column**: For structured documents
+4. **Sparse Text**: For scattered text
+5. **Digits Only**: For numerical data
+6. **High Quality**: Premium OCR mode
+7. **Character Level**: Individual character recognition
+
+### 6. Image Preprocessing (app/services/image_preprocessor.py)
+#### Advanced Image Enhancement Pipeline:
+- **5 Preprocessing Versions**: Multiple enhancement strategies
+- **CLAHE Enhancement**: Contrast Limited Adaptive Histogram Equalization
+- **Noise Reduction**: Bilateral filtering, non-local means denoising
+- **Sharpening**: Custom kernels for text clarity
+- **Morphological Operations**: Text structure enhancement
+- **Adaptive Thresholding**: Handles varying lighting conditions
+
+#### Preprocessing Methods:
+1. **Basic Enhancement**: CLAHE + Gaussian blur + OTSU threshold
+2. **High Contrast**: Contrast boost + bilateral filter
+3. **Denoise & Sharpen**: Noise reduction + sharpening kernel
+4. **Morphological**: Opening/closing operations
+5. **Adaptive Threshold**: Gaussian adaptive threshold
+
+---
+
+## 🐋 Docker Configuration
+
+### Base Image: python:3.9-slim
+### System Dependencies:
+- tesseract-ocr (English, German, French language packs)
+- OpenCV dependencies (libglib2.0-0, libsm6, libxext6, etc.)
+- GTK libraries for GUI support
+
+### Container Configuration:
+- **Working Directory**: /app
+- **Exposed Port**: 4000
+- **Environment**: PYTHONUNBUFFERED=1
+- **Command**: uvicorn main:app --host 0.0.0.0 --port 4000
+
+### Build & Run Commands:
+```bash
+# Build the image
+docker build -t ocrapi .
+
+# Run with port mapping
+docker run -p 8000:4000 ocrapi  # Access via localhost:8000
+# OR
+docker run -p 4000:4000 ocrapi  # Access via localhost:4000
+```
+
+---
+
+## 📊 Current Performance Analysis
+
+### Accuracy Metrics (Mountain Hostel Receipt Test):
+- **Previous Basic OCR**: ~40-50% accuracy
+- **Enhanced OCR**: ~30-40% accuracy (needs optimization)
+
+### Identified Issues:
+1. **Text Concatenation**: Words merging without spaces
+2. **Character Misrecognition**: Letters being misread
+3. **Structure Loss**: Table formatting not preserved
+4. **Price Accuracy**: Number recognition needs improvement
+
+### Performance Bottlenecks:
+- Complex preprocessing might be causing interference
+- Multiple OCR strategies may need fine-tuning
+- Container environment differences affecting OpenCV operations
+
+---
+
+## 🔧 Technical Implementation Details
+
+### Dependencies:
+```
+fastapi              # Web framework
+uvicorn[standard]    # ASGI server
+python-multipart     # File upload support
+Pillow              # Image processing
+pytesseract         # OCR engine wrapper
+pydantic-settings   # Configuration management
+opencv-python-headless  # Computer vision
+numpy               # Numerical computing
+scipy               # Scientific computing
+scikit-image        # Image processing algorithms
+```
+
+### API Flow:
+1. **File Upload**: Receive image file via multipart/form-data
+2. **Validation**: Check file type (image/*)
+3. **Preprocessing**: Apply multiple enhancement strategies
+4. **OCR Processing**: Run multiple OCR configurations
+5. **Ensemble Selection**: Choose best result based on confidence
+6. **Post-Processing**: Clean and format extracted text
+7. **Response**: Return structured JSON with filename and text
+
+### Error Handling:
+- **400 Bad Request**: Invalid file type or processing errors
+- **500 Internal Server Error**: Unexpected server errors
+- **Detailed Logging**: Comprehensive error messages for debugging
+
+---
+
+## 🌐 API Usage Examples
+
+### Using cURL:
+```bash
+# General OCR
+curl -X POST "http://localhost:8000/api/v1/ocr/extract-text/" \
+     -H "accept: application/json" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@mountain_hostel.jpg;type=image/jpeg"
+
+# Receipt-optimized OCR
+curl -X POST "http://localhost:8000/api/v1/ocr/extract-receipt/" \
+     -H "accept: application/json" \
+     -H "Content-Type: multipart/form-data" \
+     -F "file=@receipt.jpg;type=image/jpeg"
+```
+
+### Response Format:
+```json
+{
+  "filename": "mountain_hostel.jpg",
+  "text": "Mountain Hostel\nPetra & Walter Brunner\n3825 Gimmelwald\n..."
+}
+```
+
+### Access Points:
+- **Swagger UI**: http://localhost:8000/docs
+- **ReDoc**: http://localhost:8000/redoc
+- **Root**: http://localhost:8000/
+
+---
+
+## 🎯 Optimization Opportunities
+
+### Immediate Improvements:
+1. **Simplify Preprocessing**: Reduce complex operations that may interfere
+2. **Fine-tune Tesseract**: Adjust OCR parameters for receipt-specific content
+3. **Character Whitelist**: Restrict to expected characters for better accuracy
+4. **Region Detection**: Implement better text region identification
+
+### Future Enhancements:
+1. **Machine Learning Integration**: Custom trained models for receipt recognition
+2. **Database Integration**: Store and analyze OCR results
+3. **Batch Processing**: Handle multiple images simultaneously
+4. **Real-time Processing**: WebSocket support for live OCR
+5. **Authentication**: API key management and rate limiting
+
+---
+
+## 🐛 Known Issues & Solutions
+
+### Current Issues:
+1. **Port Mapping Confusion**: Container runs on 4000, Docker maps to 8000
+2. **Text Concatenation**: Advanced preprocessing causing text merging
+3. **Character Recognition**: Some letters consistently misread
+4. **Performance**: Complex preprocessing adding latency
+
+### Debugging Steps:
+1. Check container logs: `docker logs <container_id>`
+2. Verify port mapping: `docker ps`
+3. Test endpoints: Use Swagger UI at /docs
+4. Image quality: Ensure clear, high-contrast images
+
+---
+
+## 📈 Success Metrics
+
+### Target Accuracy Goals:
+- **General Text**: 90%+ accuracy
+- **Receipt/Invoice**: 95%+ accuracy
+- **Numbers/Prices**: 99%+ accuracy
+- **Structured Data**: Preserve formatting
+
+### Performance Targets:
+- **Response Time**: <3 seconds for typical receipt
+- **Throughput**: 10+ requests per second
+- **Memory Usage**: <512MB per container
+- **CPU Usage**: <50% under normal load
+
+---
+
+## 🔄 Development Workflow
+
+### Local Development:
+1. Install dependencies: `pip install -r requirements.txt`
+2. Install Tesseract: System-specific installation
+3. Run locally: `uvicorn main:app --reload --port 4000`
+
+### Docker Development:
+1. Build image: `docker build -t ocrapi .`
+2. Run container: `docker run -p 4000:4000 ocrapi`
+3. Test API: Visit http://localhost:4000/docs
+
+### Testing:
+1. Place test images in `/test` directory
+2. Use Swagger UI for interactive testing
+3. Compare results with expected outputs
+4. Monitor accuracy metrics
+
+---
+
+## 📝 Maintenance Notes
+
+### Regular Tasks:
+- Monitor OCR accuracy on test dataset
+- Update Tesseract language packs
+- Review and optimize preprocessing pipeline
+- Update dependencies for security patches
+
+### Monitoring:
+- Container health checks
+- API response times
+- Error rates and types
+- Resource utilization
+
+---
+
+**Last Updated**: October 4, 2025  
+**Version**: 2.0 (Enhanced Multi-Strategy OCR)  
+**Maintainer**: Development Team  
+**Status**: Active Development - Accuracy Optimization Phase

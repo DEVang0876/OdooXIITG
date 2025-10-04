@@ -1,0 +1,26 @@
+site_name: OCR API Documentation
+site_description: Documentation for the FastAPI OCR API
+site_author: DEVang0876
+
+theme:
+  name: material
+  palette:
+    primary: blue
+    accent: blue
+
+nav:
+  - Home: index.md
+  - Setup: setup.md
+  - API Reference: api.md
+  - Testing: testing.md
+
+plugins:
+  - search
+
+markdown_extensions:
+  - codehilite
+  - toc:
+      permalink: true
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
