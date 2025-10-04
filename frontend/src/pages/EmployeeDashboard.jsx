@@ -8,7 +8,6 @@ import { exportToCsv } from '../utils/exportCsv'
 import { toast } from 'react-toastify'
 
 export default function EmployeeDashboard() {
-  const user = Auth.getUser()
   const [expenses, setExpenses] = useState([])
   const [loading, setLoading] = useState(true)
   const [filter, setFilter] = useState('')

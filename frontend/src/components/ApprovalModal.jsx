@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
-import { toast } from 'react-toastify'
 
-export default function ApprovalModal({ expense, approver, onClose, onApprove, onReject }) {
+export default function ApprovalModal({ expense, onClose, onApprove, onReject }) {
   const [note, setNote] = useState('')
   if (!expense) return null
 

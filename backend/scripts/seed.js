@@ -30,9 +30,9 @@ const sampleUsers = [
         isEmailVerified: true
     },
     {
-        firstName: 'John',
-        lastName: 'Manager',
-        email: 'john.manager@company.com',
+        firstName: 'Rajesh',
+        lastName: 'Sharma',
+        email: 'rajesh.sharma@company.com',
         password: 'manager123',
         role: 'manager',
         department: 'Sales',
@@ -40,9 +40,9 @@ const sampleUsers = [
         isEmailVerified: true
     },
     {
-        firstName: 'Sarah',
-        lastName: 'Manager',
-        email: 'sarah.manager@company.com',
+        firstName: 'Priya',
+        lastName: 'Patel',
+        email: 'priya.patel@company.com',
         password: 'manager123',
         role: 'manager',
         department: 'Marketing',
@@ -50,9 +50,9 @@ const sampleUsers = [
         isEmailVerified: true
     },
     {
-        firstName: 'Mike',
-        lastName: 'Johnson',
-        email: 'mike.johnson@company.com',
+        firstName: 'Amit',
+        lastName: 'Kumar',
+        email: 'amit.kumar@company.com',
         password: 'employee123',
         role: 'employee',
         department: 'Sales',
@@ -60,9 +60,9 @@ const sampleUsers = [
         isEmailVerified: true
     },
     {
-        firstName: 'Emily',
-        lastName: 'Davis',
-        email: 'emily.davis@company.com',
+        firstName: 'Sneha',
+        lastName: 'Singh',
+        email: 'sneha.singh@company.com',
         password: 'employee123',
         role: 'employee',
         department: 'Marketing',
@@ -70,9 +70,9 @@ const sampleUsers = [
         isEmailVerified: true
     },
     {
-        firstName: 'David',
-        lastName: 'Wilson',
-        email: 'david.wilson@company.com',
+        firstName: 'Vikram',
+        lastName: 'Gupta',
+        email: 'vikram.gupta@company.com',
         password: 'employee123',
         role: 'employee',
         department: 'IT',
@@ -80,9 +80,9 @@ const sampleUsers = [
         isEmailVerified: true
     },
     {
-        firstName: 'Lisa',
-        lastName: 'Brown',
-        email: 'lisa.brown@company.com',
+        firstName: 'Anjali',
+        lastName: 'Verma',
+        email: 'anjali.verma@company.com',
         password: 'employee123',
         role: 'employee',
         department: 'HR',
@@ -90,13 +90,43 @@ const sampleUsers = [
         isEmailVerified: true
     },
     {
-        firstName: 'James',
-        lastName: 'Taylor',
-        email: 'james.taylor@company.com',
+        firstName: 'Rohit',
+        lastName: 'Mehta',
+        email: 'rohit.mehta@company.com',
         password: 'employee123',
         role: 'employee',
         department: 'Finance',
         employeeId: 'EMP005',
+        isEmailVerified: true
+    },
+    {
+        firstName: 'Kavita',
+        lastName: 'Joshi',
+        email: 'kavita.joshi@company.com',
+        password: 'employee123',
+        role: 'employee',
+        department: 'Operations',
+        employeeId: 'EMP006',
+        isEmailVerified: true
+    },
+    {
+        firstName: 'Arjun',
+        lastName: 'Nair',
+        email: 'arjun.nair@company.com',
+        password: 'employee123',
+        role: 'employee',
+        department: 'Engineering',
+        employeeId: 'EMP007',
+        isEmailVerified: true
+    },
+    {
+        firstName: 'Meera',
+        lastName: 'Iyer',
+        email: 'meera.iyer@company.com',
+        password: 'employee123',
+        role: 'employee',
+        department: 'Design',
+        employeeId: 'EMP008',
         isEmailVerified: true
     }
 ];
@@ -165,66 +195,66 @@ const sampleExpenses = [
     {
         title: 'Office Chair Purchase',
         description: 'Ergonomic office chair for new employee workstation',
-        amount: 299.99,
-        currency: 'USD',
+        amount: 25000,
+        currency: 'INR',
         paymentMethod: 'credit_card',
-        vendor: 'Office Depot',
-        location: 'Downtown Branch',
+        vendor: 'Godrej Interio',
+        location: 'Connaught Place, Delhi',
         tags: ['furniture', 'ergonomics'],
         status: 'pending'
     },
     {
         title: 'Client Lunch Meeting',
-        description: 'Lunch meeting with ABC Corp clients to discuss project requirements',
-        amount: 145.50,
-        currency: 'USD',
+        description: 'Lunch meeting with Infosys clients to discuss project requirements',
+        amount: 8500,
+        currency: 'INR',
         paymentMethod: 'credit_card',
-        vendor: 'The Capital Grill',
-        location: 'Financial District',
+        vendor: 'The Leela Palace',
+        location: 'Chanakyapuri, Delhi',
         tags: ['client-meeting', 'lunch'],
         status: 'pending'
     },
     {
         title: 'Adobe Creative Suite License',
         description: 'Annual license renewal for Adobe Creative Suite',
-        amount: 599.99,
-        currency: 'USD',
+        amount: 45000,
+        currency: 'INR',
         paymentMethod: 'bank_transfer',
-        vendor: 'Adobe Inc.',
+        vendor: 'Adobe India',
         tags: ['software', 'design-tools'],
         status: 'pending'
     },
 
     // Approved expenses
     {
-        title: 'Business Trip to New York',
-        description: 'Flight and hotel for client presentation in NYC',
-        amount: 1250.00,
-        currency: 'USD',
+        title: 'Business Trip to Mumbai',
+        description: 'Flight and hotel for client presentation in Mumbai',
+        amount: 85000,
+        currency: 'INR',
         paymentMethod: 'credit_card',
-        vendor: 'United Airlines + Hilton',
-        location: 'New York, NY',
+        vendor: 'Air India + Taj Mahal Palace',
+        location: 'Mumbai, Maharashtra',
         tags: ['travel', 'client-presentation'],
         status: 'approved'
     },
     {
         title: 'Team Building Event',
-        description: 'Paintball outing for department team building',
-        amount: 450.00,
-        currency: 'USD',
+        description: 'Adventure sports outing for department team building',
+        amount: 35000,
+        currency: 'INR',
         paymentMethod: 'credit_card',
-        vendor: 'Urban Paintball',
-        location: 'Suburban Location',
+        vendor: 'Goa Adventure Sports',
+        location: 'Goa',
         tags: ['team-building', 'entertainment'],
         status: 'approved'
     },
     {
         title: 'Printer Toner Cartridges',
         description: 'Black and color toner cartridges for office printer',
-        amount: 89.99,
-        currency: 'USD',
+        amount: 6500,
+        currency: 'INR',
         paymentMethod: 'credit_card',
-        vendor: 'Staples',
+        vendor: 'HP India',
         tags: ['supplies', 'printer'],
         status: 'approved'
     },
@@ -233,20 +263,20 @@ const sampleExpenses = [
     {
         title: 'Personal Gym Membership',
         description: 'Monthly gym membership for fitness',
-        amount: 75.00,
-        currency: 'USD',
+        amount: 5000,
+        currency: 'INR',
         paymentMethod: 'debit_card',
-        vendor: 'FitLife Gym',
+        vendor: 'Cult.Fit Gym',
         rejectionReason: 'Personal expense not eligible for reimbursement',
         status: 'rejected'
     },
     {
         title: 'Luxury Coffee Machine',
         description: 'High-end espresso machine for break room',
-        amount: 899.99,
-        currency: 'USD',
+        amount: 75000,
+        currency: 'INR',
         paymentMethod: 'credit_card',
-        vendor: 'Williams Sonoma',
+        vendor: 'Nespresso India',
         rejectionReason: 'Exceeds budget limit for office equipment',
         status: 'rejected'
     },
@@ -255,10 +285,10 @@ const sampleExpenses = [
     {
         title: 'Conference Registration',
         description: 'Tech Conference 2025 registration and travel',
-        amount: 850.00,
-        currency: 'USD',
+        amount: 65000,
+        currency: 'INR',
         paymentMethod: 'bank_transfer',
-        vendor: 'TechConf Inc.',
+        vendor: 'NASSCOM Tech Conference',
         tags: ['conference', 'training'],
         status: 'processing'
     }
@@ -302,8 +332,8 @@ async function seedUsers() {
         const users = await User.insertMany(usersWithHashedPasswords);
 
         // Set up manager relationships
-        const johnManager = users.find(u => u.email === 'john.manager@company.com');
-        const sarahManager = users.find(u => u.email === 'sarah.manager@company.com');
+        const rajeshManager = users.find(u => u.email === 'rajesh.sharma@company.com');
+        const priyaManager = users.find(u => u.email === 'priya.patel@company.com');
 
         // Assign managers to employees
         const salesEmployees = users.filter(u =>
@@ -312,14 +342,39 @@ async function seedUsers() {
         const marketingEmployees = users.filter(u =>
             u.role === 'employee' && u.department === 'Marketing'
         );
+        const itEmployees = users.filter(u =>
+            u.role === 'employee' && u.department === 'IT'
+        );
+        const hrEmployees = users.filter(u =>
+            u.role === 'employee' && u.department === 'HR'
+        );
+        const financeEmployees = users.filter(u =>
+            u.role === 'employee' && u.department === 'Finance'
+        );
+        const operationsEmployees = users.filter(u =>
+            u.role === 'employee' && u.department === 'Operations'
+        );
+        const engineeringEmployees = users.filter(u =>
+            u.role === 'employee' && u.department === 'Engineering'
+        );
+        const designEmployees = users.filter(u =>
+            u.role === 'employee' && u.department === 'Design'
+        );
 
+        // Assign managers
         for (const employee of salesEmployees) {
-            employee.manager = johnManager._id;
+            employee.manager = rajeshManager._id;
             await employee.save();
         }
 
         for (const employee of marketingEmployees) {
-            employee.manager = sarahManager._id;
+            employee.manager = priyaManager._id;
+            await employee.save();
+        }
+
+        // Assign IT and other departments to Rajesh as secondary manager
+        for (const employee of [...itEmployees, ...hrEmployees, ...financeEmployees, ...operationsEmployees, ...engineeringEmployees, ...designEmployees]) {
+            employee.manager = rajeshManager._id;
             await employee.save();
         }
 
@@ -411,8 +466,10 @@ async function seedDatabase() {
 
         console.log('\n🔐 Test Accounts:');
         console.log('   Admin: admin@company.com / admin123');
-        console.log('   Manager: john.manager@company.com / manager123');
-        console.log('   Employee: mike.johnson@company.com / employee123');
+        console.log('   Manager: rajesh.sharma@company.com / manager123');
+        console.log('   Manager: priya.patel@company.com / manager123');
+        console.log('   Employee: amit.kumar@company.com / employee123');
+        console.log('   Employee: sneha.singh@company.com / employee123');
 
     } catch (error) {
         console.error('❌ Database seeding failed:', error);

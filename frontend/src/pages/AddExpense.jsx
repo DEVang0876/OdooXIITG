@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom'
 import ExpenseUploadForm from '../components/ExpenseUploadForm'
 
 export default function AddExpense() {
-  const user = Auth.getUser()
   const navigate = useNavigate()
   const [form, setForm] = useState({ title: '', date: '', category: '', amount: '', description: '', receipt: null })
   const [categories, setCategories] = useState([])
